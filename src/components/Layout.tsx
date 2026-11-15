@@ -20,6 +20,7 @@ import { useEffect } from 'react'
 import { cn } from '../lib/cn'
 import { formatDateLong } from '../lib/dates'
 import { useFinance } from '../store/finance'
+import { useCloud } from '../store/cloud'
 import { useUI, type Page } from '../store/ui'
 
 export const NAV: Array<{ page: Page; label: string; icon: LucideIcon; short: string }> = [
@@ -95,6 +96,8 @@ function Sides() {
   const setPage = useUI((s) => s.setPage)
   const theme = useUI((s) => s.theme)
   const toggleTheme = useUI((s) => s.toggleTheme)
+  const cloudEmail = useCloud((s) => s.email)
+  const cloudStatus = useCloud((s) => s.status)
 
   return (
     <div className="mt-auto space-y-3 pt-6">
@@ -122,7 +125,19 @@ function Sides() {
           </span>
           <span className="min-w-0">
             <span className="block truncate text-[13px] font-semibold text-text">{profile.name}</span>
-            <span className="block text-[11px] text-muted">Akun lokal</span>
+            <span className="block truncate text-[11px] text-muted">
+              {cloudEmail
+                ? cloudStatus === 'syncing'
+                  ? 'Menyinkronkan…'
+                  : cloudStatus === 'error'
+                    ? 'Sinkron gagal'
+                    : cloudStatus === 'needs-choice'
+                      ? 'Perlu pilihan sinkron'
+                      : cloudStatus === 'ready'
+                        ? 'Siap dicadangkan'
+                        : 'Tersinkron cloud'
+                : 'Akun lokal'}
+            </span>
           </span>
         </button>
         <button

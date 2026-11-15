@@ -1,6 +1,7 @@
 import { Check, Database, Download, HardDrive, Info, Moon, Palette, RotateCcw, ShieldCheck, Sun, Trash2, Upload, User } from 'lucide-react'
 import { useMemo, useRef, useState } from 'react'
 import { ConfirmDialog } from '../components/ConfirmDialog'
+import { CloudSyncCard } from '../components/CloudSyncCard'
 import { PageHeader } from '../components/PageHeader'
 import { cn } from '../lib/cn'
 import { exportBackup, parseBackup } from '../lib/backup'
@@ -120,6 +121,8 @@ export function Settings() {
             </button>
           </div>
         </Section>
+
+        <CloudSyncCard />
 
         <Section icon={Palette} title="Tampilan" description="Pilih tema yang paling nyaman untuk matamu.">
           <div className="grid grid-cols-2 gap-2">
